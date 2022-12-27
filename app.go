@@ -29,7 +29,7 @@ type shortlinkResp struct {
 
 // Initialize is initialization of app
 func (a *App) Initialize(e *Env) {
-	// set log formatter
+	
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	a.Config = e
 	a.Router = mux.NewRouter()
@@ -39,11 +39,7 @@ func (a *App) Initialize(e *Env) {
 }
 
 func (a *App) initializeRoutes() {
-	// a.Router.HandleFunc("/api/shorten", a.createShortlink).Methods("POST")
-	// a.Router.HandleFunc("/api/info", a.getShortlinkInfo).Methods("GET")
-	// a.Router.HandleFunc("/{shortlink:[a-zA-Z0-9]{1,11}}", a.redirect).Methods("GET")
 	m := alice.New(a.Middlerware.LoggingHandler, a.Middlerware.RecoverHandler)
-
 	a.Router.Handle("/api/shorten", m.ThenFunc(a.createShortlink)).Methods("POST")
 	a.Router.Handle("/api/info", m.ThenFunc(a.getShortlinkInfo)).Methods("GET")
 	a.Router.Handle("/{shortlink:[a-zA-Z0-9]{1,11}}", m.ThenFunc(a.redirect)).Methods("GET")
@@ -98,7 +94,7 @@ func (a *App) redirect(w http.ResponseWriter, r *http.Request) {
 
 // Run starts listen and server
 func (a *App) Run(add string) {
-	fmt.Println("服务器运行在8080端口...")
+	fmt.Println("Server running at 8080 port...")
 	log.Fatal(http.ListenAndServe(add, a.Router))
 }
 
