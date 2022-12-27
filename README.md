@@ -1,2 +1,1 @@
-# shortlink
-Go Project - shortlink
+项目视频 https://www.imooc.com/video/19702
